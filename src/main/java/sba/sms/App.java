@@ -9,6 +9,7 @@ import sba.sms.utils.CommandLine;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * SBA Core Java Hibernate/Junit
@@ -81,7 +82,7 @@ public class App {
     private static void printStudentCourses(String email) {
         System.out.printf("%s courses:%n-----------------------------%n", email);
         System.out.printf("%-2s | %-20s | %s%n", "ID", "Course", "Instructor");
-        List<Course> userCourses = studentService.getStudentCourses(email);
+       Set<Course> userCourses = studentService.getStudentCourses(email);
         if (userCourses.isEmpty()) System.out.printf("No courses to view%n");
         for (Course course : userCourses) {
             System.out.printf("%-2d | %-20s | %s%n", course.getId(), course.getName(), course.getInstructor());

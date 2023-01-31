@@ -1,7 +1,6 @@
 package sba.sms.dao;
 
 import sba.sms.models.Course;
-
 import java.util.List;
 
 public interface CourseI {

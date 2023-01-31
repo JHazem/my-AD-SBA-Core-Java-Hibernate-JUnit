@@ -1,8 +1,10 @@
 package sba.sms.models;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
+import sba.sms.models.Student;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,37 +31,41 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table
 @Entity
-@Table(name = "course")
 public class Course {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	@Column(name = "id")
 	int id;
 	@NonNull
-	@Column(length = 50, name = "name")
+	@Column(columnDefinition = "varchar(50)", name = "name")
 	String name;
 	@NonNull
-	@Column(length = 50, name = "instructor")
+	@Column(columnDefinition = "varchar(50)", name = "instructor")
 	String instructor;
+	
 	@ToString.Exclude
-	@ManyToMany(mappedBy = "courses", cascade = { CascadeType.PERSIST, 
-													CascadeType.MERGE, CascadeType.REFRESH,
-													CascadeType.DETACH }, fetch = FetchType.EAGER)
-	Set<Student> students = new HashSet<>();
-
+	@ManyToMany(mappedBy = "courses", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},fetch = FetchType.EAGER)
+	private Set<Student> students = new LinkedHashSet<>();
+	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) 
 			return true;
-		if (!(obj instanceof Course) || obj == null)
+		if(obj == null) 
+			return false;
+		if(getClass() != obj.getClass()) 
 			return false;
 		Course course = (Course) obj;
 		return id == course.id && name.equals(course.name) && instructor.equals(course.instructor);
 	}
-
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, instructor);
+		return Objects.hash(id,name,instructor);
 	}
+
+
+
 }

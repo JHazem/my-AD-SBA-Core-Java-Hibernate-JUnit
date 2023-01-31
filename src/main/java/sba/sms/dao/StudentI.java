@@ -4,6 +4,7 @@ import sba.sms.models.Course;
 import sba.sms.models.Student;
 
 import java.util.List;
+import java.util.Set;
 
 public interface StudentI {
     List<Student> getAllStudents();
@@ -15,5 +16,5 @@ public interface StudentI {
 
     void registerStudentToCourse(String email, int courseId);
 
-    List<Course> getStudentCourses(String email);
+    Set<Course> getStudentCourses(String email);
 }
