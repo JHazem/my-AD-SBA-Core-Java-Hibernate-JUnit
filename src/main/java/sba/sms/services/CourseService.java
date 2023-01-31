@@ -11,22 +11,20 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
-
-
+ 
 public class CourseService implements CourseI {
 	@Override
 	public void createCourse(Course course) {
 		Session s = HibernateUtil.getSessionFactory().openSession();
-		Transaction ts = null;
+		Transaction trans = null;
 		
 		try {
-			ts = s.beginTransaction();
+			trans = s.beginTransaction();
 			s.persist(course);
-			ts.commit();
+			trans.commit();
 		} catch (HibernateException ex) {
-			if(ts != null) 
-				ts.rollback();
+			if(trans != null) 
+				trans.rollback();
 			ex.printStackTrace();
 		} finally {
 			s.close();
@@ -36,18 +34,18 @@ public class CourseService implements CourseI {
 	@Override
 	public Course getCourseById(int courseId) {
 		Session s = HibernateUtil.getSessionFactory().openSession();
-		Transaction ts = null;
+		Transaction trans = null;
 		Course course = new Course();
 		
 		try {
-			ts = s.beginTransaction();
+			trans = s.beginTransaction();
 			Query<Course> q = s.createQuery("From Course where id = :id", Course.class);
 			q.setParameter("id",courseId);
 			course = q.getSingleResult();
-			ts.commit();
+			trans.commit();
 		} catch (HibernateException ex) {
-			if(ts != null)
-				ts.rollback();
+			if(trans != null)
+				trans.rollback();
 			ex.printStackTrace();
 		} finally {
 			s.close();
@@ -58,17 +56,17 @@ public class CourseService implements CourseI {
 	@Override
 	public List<Course> getAllCourses() {
 		Session s = HibernateUtil.getSessionFactory().openSession();
-		Transaction ts = null;
+		Transaction trans = null;
 		List<Course> courseList = new ArrayList<>();
 		
 		try {
-			ts = s.beginTransaction();
+			trans = s.beginTransaction();
 			Query<Course> q = s.createQuery("From Course ", Course.class);
 			courseList = q.getResultList();
-			ts.commit();
+			trans.commit();
 		} catch (HibernateException ex) {
-			if(ts != null) 
-				ts.rollback();
+			if(trans != null) 
+				trans.rollback();
 			ex.printStackTrace();
 		} finally {
 			s.close();

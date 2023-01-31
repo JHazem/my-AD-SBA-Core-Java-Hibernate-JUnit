@@ -44,8 +44,10 @@ public class Student {
 	String password;
 	
 	@ToString.Exclude
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
-	@JoinTable(name = "student_courses",joinColumns = @JoinColumn(name = "student_email"),inverseJoinColumns = @JoinColumn(name = "courses_id"))
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, 
+			CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
+	@JoinTable(name = "student_courses",joinColumns = @JoinColumn(name = "student_email"),
+	inverseJoinColumns = @JoinColumn(name = "courses_id"))
 	Set<Course> courses = new LinkedHashSet<>();
 	
 	public void addCourse(Course c) {
